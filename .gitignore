@@ -1,0 +1,31 @@
+# Environment files
+.env
+**/.env
+!.env.default
+!**/.env.default
+
+# Affine config folder
+affine/data/config/
+
+# Docker volumes and data
+*/data/db/
+
+# Private keys
+*.key
+*.pem
+
+# MacOS
+.DS_Store
+
+# Log Files
+*.log
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Build files
+node_modules/
+build/
+dist/
