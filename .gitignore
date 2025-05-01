@@ -7,6 +7,9 @@
 # Affine config folder
 affine/data/config/
 
+# Jellyfin folder
+jellyfin/*
+
 # Docker volumes and data
 */data/db/
 

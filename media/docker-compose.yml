@@ -1,0 +1,16 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      # - JELLYFIN_PublishedServerUrl=http://192.168.0.5 #optional
+    volumes:
+      - ${HOME}/Docker/media/jellyfin/library:/config
+      - /mnt/external/drama:/data/tvshows
+      - /mnt/external/Movies:/data/movies
+    ports:
+      - 8096:8096
+    restart: unless-stopped
