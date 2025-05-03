@@ -11,6 +11,11 @@ affine/data/config/
 **/jellyfin/**/*
 jellyfin/**/*
 
+# Homepage config
+homepage/config/
+homepage/config/**/*
+**/homepage/config/**/*
+
 # Docker volumes and data
 */data/db/
 

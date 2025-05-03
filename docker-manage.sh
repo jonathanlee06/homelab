@@ -9,6 +9,9 @@ ACTION=${1:-"ps"}  # Default to 'ps' if no argument is provided
 # Optional target project name (directory name)
 TARGET=${2:-""}
 
+# Optional container name (for 'logs' command)
+CONTAINER_NAME=${3:-""}
+
 # Colors for better readability
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -139,6 +142,7 @@ case "$ACTION" in
         log_info "  restart   Restart projects"
         log_info "  ps        Show status (default)"
         log_info "  list      List available categories"
+        log_info "  logs      Show live logs for a specific category"
         log_info "  help      Show this help message"
         log_info ""
         log_info "Examples:"
@@ -180,6 +184,29 @@ case "$ACTION" in
             done
             
             log_success "All operations completed."
+        fi
+        ;;
+
+    logs)
+        if [ -n "$TARGET" ]; then
+            if [ -d "$DOCKER_ROOT/$TARGET" ]; then
+                if [ -n "$CONTAINER_NAME" ]; then
+                    log_info "Fetching logs for container: $CONTAINER_NAME in category: $TARGET"
+                    docker compose -f "$DOCKER_ROOT/$TARGET/docker-compose.yml" logs -f "$CONTAINER_NAME"
+                else
+                    log_info "Fetching logs for all containers in category: $TARGET"
+                    docker compose -f "$DOCKER_ROOT/$TARGET/docker-compose.yml" logs -f
+                fi
+            else
+                log_error "Category not found: $TARGET"
+                list_categories
+                exit 1
+            fi
+        else
+            log_warning "Logs command requires at least a target category"
+            log_info "Usage: $0 logs <CATEGORY> [CONTAINER]"
+            list_categories
+            exit 1
         fi
         ;;
         

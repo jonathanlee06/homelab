@@ -9,8 +9,20 @@ services:
       # Optionally, also mount docker socket if you want to use the docker containers widget
       # - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
-      - 8080:8080
+      - 8081:8081
     # env_file: ./glance/.env
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 8080:3000
+    volumes:
+      - ${HOME}/Docker/monitoring/homepage/config:/app/config # Make sure your local config directory exists
+      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: gethomepage.dev,192.168.31.24:8080 # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus

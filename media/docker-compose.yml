@@ -14,3 +14,16 @@ services:
     ports:
       - 8096:8096
     restart: unless-stopped
+
+  openbooks:
+    image: evanbuss/openbooks:latest
+    container_name: openbooks
+    ports:
+      - "8097:80"  # Host port:Container port
+    volumes:
+      - ${HOME}/Docker/media/openbooks:/books
+    restart: unless-stopped
+    command: openbooks server --name jonathan --persist --log
+
+volumes:
+  openbooks:
